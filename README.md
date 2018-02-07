@@ -5,6 +5,7 @@ This README would normally document whatever steps are necessary to get your app
 installed python packages
 django == 1.9.13
 django-nested-admin == 3.0.21
+django-grappelli
 
 ### What is this repository for? ###
 
