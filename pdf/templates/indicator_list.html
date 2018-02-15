@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<htmL>
+    <head>
+        <title>Mini HRD</title>
+    </head>
+    <body>
+        <h1>Daftar Hadir</h1>
+        <form action='/indicator_list/' method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Tampilkan" />
+        </form>
+        <table border="1">
+            <thead>
+                <tr>
+                    <td>No</td>
+                    <td>Indicator</td>
+                    <td>Framework Components</td>
+                    <td>Stages</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% if indicator_list %}
+                    {% for list in indicator_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ list.name }}</td>
+                        <td>{{ list.framework }}</td>
+                        <td>{{ list.stage }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="3">Tidak ada data kehadiran saat ini...</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        {% if frameworks %}
+            {% for framework in frameworks %}
+            <li>{{ framework.name }}</li>
+            {% endfor %}
+        {% endif %}
+        {{ core }}
+        <p><a href="/">Kembali ke Profil</a></p>
+    </body>
+</htmL>
