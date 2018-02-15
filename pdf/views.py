@@ -16,11 +16,11 @@ def indicator_list(request):
     indicator_list = None
     if request.method == 'POST':
         core = request.POST.get('core_list', False)
-        stage = request.POST.get('stage_list', False)
+        stage = request.POST.getlist('stage_list', False)
 #        core = int(float(request.POST['core']))
 #        stage = int(float(request.POST['stage']))
         #if form.is_valid():
-        indicator_list = Indicator.objects.filter(stage__id=stage,framework__core__id=core)
+        indicator_list = Indicator.objects.filter(stage__id__in=stage,framework__core__id=core)
         frameworks = Framework.objects.filter(core__id=core)
 #    indicator_list = Indicator.objects.filter(stage__id='1',framework__core__id="1")
     return render(request, 'indicator_list.html', {'form':form, 'frameworks':frameworks, 'indicator_list':indicator_list, 'cors':cors, 'stags':stags})
