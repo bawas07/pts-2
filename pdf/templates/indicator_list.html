@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <htmL>
     <head>
-        <title>Mini HRD</title>
+        <title>PTS 2.0</title>
     </head>
     <body>
         <h1>Daftar Hadir</h1>
@@ -10,38 +10,46 @@
             {{ form.as_p }}
             <input type="submit" value="Tampilkan" />
         </form>
+        {% for framework in frameworks %}
+        {{ framework.name }}
         <table border="1">
             <thead>
                 <tr>
-                    <td>No</td>
-                    <td>Indicator</td>
-                    <td>Framework Components</td>
-                    <td>Stages</td>
+                    {% for stage in stages %}
+                    <td>{{ stage.name }}</td>
+                    {% endfor %}
                 </tr>
             </thead>
             <tbody>
-                {% if indicator_list %}
-                    {% for list in indicator_list %}
-                    <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td>{{ list.name }}</td>
-                        <td>{{ list.framework }}</td>
-                        <td>{{ list.stage }}</td>
-                    </tr>
-                    {% endfor %}
-                {% else %}
-                <tr>
-                    <td colspan="3">Tidak ada data kehadiran saat ini...</td>
-                </tr>
+            <tr>
+                {% for framedesc in framedescs %}
+                {% if framedesc.framework.name == framework.name %}
+                {% for stage in stages %}
+                {% if framedesc.stage.name == stage.name %}
+                <td>{{ framedesc.descriptor }}</td>
                 {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for stage in stages %}
+                    <td align="left" valign="top">
+                        <ul>
+                    {% for list in indicator_list %}
+                        {% if framework.name == list.framework.name %}
+                            {% if stage.name == list.stage.name %}
+                                <li>&#9633; {{ list.name }}</li>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                        </ul>
+                    </td>
+                {% endfor %}
+            </tr>
             </tbody>
         </table>
-        {% if frameworks %}
-            {% for framework in frameworks %}
-            <li>{{ framework.name }}</li>
-            {% endfor %}
-        {% endif %}
-        {{ core }}
+        {% endfor %}
         <p><a href="/">Kembali ke Profil</a></p>
     </body>
 </htmL>
